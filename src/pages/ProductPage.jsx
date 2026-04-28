@@ -15,7 +15,6 @@ export default function ProductPage({
   const [selSize, setSelSize] = useState(product.sizes[0]);
   const [selColor, setSelColor] = useState(product.colors[0]);
   const [added, setAdded] = useState(false);
-  const [tab, setTab] = useState('details');
 
   const wished = wishlist.includes(product.id);
 
