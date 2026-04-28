@@ -16,10 +16,14 @@ export default function ProductCard({
 
   return (
     <div
-      style={{ cursor: 'pointer', position: 'relative' }}
+      style={{
+        cursor: 'pointer',
+        position: 'relative'
+      }}
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
     >
+      {/* Image Box */}
       <div
         onClick={() => go('product', p)}
         style={{
@@ -44,6 +48,7 @@ export default function ProductCard({
           />
         )}
 
+        {/* New Badge */}
         {p.isNew && (
           <span
             style={{
@@ -62,6 +67,7 @@ export default function ProductCard({
           </span>
         )}
 
+        {/* Sale Badge */}
         {p.orig && (
           <span
             style={{
@@ -80,6 +86,7 @@ export default function ProductCard({
           </span>
         )}
 
+        {/* Wishlist Button */}
         <button
           onClick={(e) => {
             e.stopPropagation();
@@ -91,10 +98,14 @@ export default function ProductCard({
             right: 10,
             background: wished ? C.black : 'rgba(255,255,255,.85)',
             border: 'none',
+            cursor: 'pointer',
             width: 34,
             height: 34,
             borderRadius: '50%',
-            cursor: 'pointer'
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            transition: 'all .2s'
           }}
         >
           <Heart
@@ -104,6 +115,7 @@ export default function ProductCard({
           />
         </button>
 
+        {/* Quick Add */}
         <div
           onClick={(e) => {
             e.stopPropagation();
@@ -121,8 +133,8 @@ export default function ProductCard({
             fontSize: 10,
             letterSpacing: 3,
             fontFamily: sans,
-            transform: hover ? 'translateY(0)' : 'translateY(100%)',
             transition: 'transform .25s',
+            transform: hover ? 'translateY(0)' : 'translateY(100%)',
             cursor: 'pointer'
           }}
         >
@@ -130,41 +142,79 @@ export default function ProductCard({
         </div>
       </div>
 
+      {/* Product Info */}
       <div
         style={{ paddingTop: 12 }}
         onClick={() => go('product', p)}
       >
-        <p
+        <div
           style={{
-            fontSize: 10,
-            color: C.muted,
-            fontFamily: sans
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'flex-start'
           }}
         >
-          {p.brand}
-        </p>
+          <div>
+            <p
+              style={{
+                fontSize: 10,
+                letterSpacing: 2,
+                color: C.muted,
+                textTransform: 'uppercase',
+                fontFamily: sans,
+                marginBottom: 4
+              }}
+            >
+              {p.brand}
+            </p>
 
-        <p
+            <p
+              style={{
+                fontSize: 14,
+                color: C.text,
+                fontFamily: sans,
+                fontWeight: 400
+              }}
+            >
+              {p.name}
+            </p>
+          </div>
+
+          <div style={{ textAlign: 'right' }}>
+            <p
+              style={{
+                fontSize: 14,
+                fontWeight: 500,
+                color: C.text,
+                fontFamily: sans
+              }}
+            >
+              {fmt(p.price)}
+            </p>
+
+            {p.orig && (
+              <p
+                style={{
+                  fontSize: 11,
+                  color: C.muted,
+                  textDecoration: 'line-through',
+                  fontFamily: sans
+                }}
+              >
+                {fmt(p.orig)}
+              </p>
+            )}
+          </div>
+        </div>
+
+        {/* Ratings */}
+        <div
           style={{
-            fontSize: 14,
-            color: C.text,
-            fontFamily: sans
+            display: 'flex',
+            gap: 3,
+            marginTop: 6
           }}
         >
-          {p.name}
-        </p>
-
-        <p
-          style={{
-            fontSize: 14,
-            color: C.text,
-            fontFamily: sans
-          }}
-        >
-          {fmt(p.price)}
-        </p>
-
-        <div style={{ display: 'flex', gap: 3 }}>
           {[1, 2, 3, 4, 5].map((star) => (
             <Star
               key={star}
@@ -173,8 +223,20 @@ export default function ProductCard({
               color={star <= Math.round(p.rating) ? C.gold : C.faint}
             />
           ))}
+
+          <span
+            style={{
+              fontSize: 10,
+              color: C.muted,
+              fontFamily: sans,
+              marginLeft: 4
+            }}
+          >
+            ({p.reviews})
+          </span>
         </div>
       </div>
     </div>
   );
 }
+
